@@ -3,7 +3,8 @@ SEEEDSTUDIO TFT DEMOSCENE
 
 I'm using an arduino uno + Seeedstudio TFT for this.
 
-https://www.youtube.com/watch?v=hznBVrCpsZc
+[![ScreenShot](https://img.youtube.com/vi/hznBVrCpsZc/mqdefault.jpg)](https://www.youtube.com/watch?v=hznBVrCpsZc)
+
 
 
 I'm going to have some classic demoscene stuff in here. For now, it's a rotating cube.
