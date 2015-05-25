@@ -28,12 +28,16 @@ What I want
  - Mandelbrot + Julia fractals
  - Game of life
  - Plasma
- - Some really basic ray tracing stuff
+ - Some really basic ray tracing stuff with random geometry
+ - Cityscape renderer
+ - Particles with physics and attractors
  - Fancy text
  - Landscape renderer
  - Wireframe flythroughs
  - 3D Star field
  - 3D rotating shapes (letters, x-hedrons) in a faux-3D background
+ - 3D texture mapping
+ - 3D models from quake
 
 
 What I need to improve
