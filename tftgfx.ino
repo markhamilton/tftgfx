@@ -1,3 +1,5 @@
+// screen is 240x320
+
 #include <stdint.h>
 #include <SeeedTouchScreen.h>
 #include <TFTv2.h>
@@ -6,29 +8,16 @@
 #include "tftgfx.h"
 #include "demos.h"
 
-// screen is 240x320
-
 TouchScreen ts = TouchScreen(XP, YP, XM, YM); //init TouchScreen port pins
-bool landscape = true;
 
-enum drawmode_t {
-  DM_RAW,
-  
-  DM_POINT,
-  DM_TRI,
-  
-  DM_RECT,
-  DM_FILLRECT,
-  DM_ELLIPSE,
-  DM_FILLELLIPSE,
-  
-  DM_LINE,
-  DM_TEXT,
-  DM_PLASMA,
+enum {
   DM_CUBE,
-} drawmode;
+  DM_PLASMA,
 
-uint8_t draw_mode = DM_CUBE;
+} demo_mode;
+
+// state
+uint8_t dm = DM_CUBE;
 
 void setup()
 {
@@ -57,7 +46,7 @@ void loop()
   
   updateSerial();
   
-  switch(draw_mode) {
+  switch(dm) {
     case DM_CUBE:
       drawCube();
       break;

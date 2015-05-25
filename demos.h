@@ -30,11 +30,12 @@ void drawCube()
   static line2d bbold;
   static bool bbinit = false;
   
-  animation_step+=4;
+  animation_step+=10;
   if(animation_step > 628) animation_step -= 628;
   
-//  float distance = 220.0f + sin((float)animation_step / 100.0f) * 100.0f;
-  float distance = 120.0f;
+  // zoom in and out
+  float distance = 200.0f + sin((float)animation_step / 100.0f) * 100.0f;
+//  float distance = 120.0f;
   
   static const point3d cube[] = { 
     point3d{ -1,  1, -1 },
@@ -46,8 +47,8 @@ void drawCube()
     point3d{ -1, -1,  1 },
     point3d{  1, -1,  1 } };
   
-  rot.x += 1;
-  rot.y += 2;
+  rot.x += 6;
+  rot.y += 12;
   
   if(rot.x > 360) rot.x -= 360;
   if(rot.y > 360) rot.y -= 360;
@@ -73,22 +74,6 @@ void drawCube()
     }
   }
   
-  // draw wireframe
-//  Tft.drawLine(verts[0].x, verts[0].y, verts[1].x, verts[1].y, BLACK);
-//  Tft.drawLine(verts[1].x, verts[1].y, verts[3].x, verts[3].y, BLACK);
-//  Tft.drawLine(verts[3].x, verts[3].y, verts[2].x, verts[2].y, BLACK);
-//  Tft.drawLine(verts[2].x, verts[2].y, verts[0].x, verts[0].y, BLACK);
-//  
-//  Tft.drawLine(verts[4].x, verts[4].y, verts[5].x, verts[5].y, BLACK);
-//  Tft.drawLine(verts[5].x, verts[5].y, verts[7].x, verts[7].y, BLACK);
-//  Tft.drawLine(verts[7].x, verts[7].y, verts[6].x, verts[6].y, BLACK);
-//  Tft.drawLine(verts[6].x, verts[6].y, verts[4].x, verts[4].y, BLACK);
-//  
-//  Tft.drawLine(verts[0].x, verts[0].y, verts[4].x, verts[4].y, BLACK);
-//  Tft.drawLine(verts[2].x, verts[2].y, verts[6].x, verts[6].y, BLACK);
-//  
-//  Tft.drawLine(verts[1].x, verts[1].y, verts[5].x, verts[5].y, BLACK);
-//  Tft.drawLine(verts[3].x, verts[3].y, verts[7].x, verts[7].y, BLACK);
 
   // fill quads
   
@@ -137,15 +122,36 @@ void drawCube()
   if(bbinit) Tft.fillRectangle(bbold.p[0].x, bbold.p[0].y, bbold.p[1].x - bbold.p[0].x, bbold.p[1].y - bbold.p[0].y, CYAN);
   
   static const INT16U faceColors[] = { WHITE, RED, GREEN, BLUE, YELLOW, GRAY2 };
+  // painter's algorithm (back->front)
+  // https://en.wikipedia.org/wiki/Painter%27s_algorithm
   for(int i = 2; i >= 0; --i) {
-    // painter's technique
     fillQuad(quads[sface[i]], faceColors[sface[i]]);
+    
+    // this is an incomplete shading method
+    // doesn't really work well with gray since there's only 16-bit color
 //    fillQuad(quads[sface[i]], getColor((float)dist[i] * 0.5f, (float)dist[i] * 0.5f, (float)dist[i] * 0.5f));
   }
   
+  // draw wireframe
+//  Tft.drawLine(verts[0].x, verts[0].y, verts[1].x, verts[1].y, BLACK);
+//  Tft.drawLine(verts[1].x, verts[1].y, verts[3].x, verts[3].y, BLACK);
+//  Tft.drawLine(verts[3].x, verts[3].y, verts[2].x, verts[2].y, BLACK);
+//  Tft.drawLine(verts[2].x, verts[2].y, verts[0].x, verts[0].y, BLACK);
+//  
+//  Tft.drawLine(verts[4].x, verts[4].y, verts[5].x, verts[5].y, BLACK);
+//  Tft.drawLine(verts[5].x, verts[5].y, verts[7].x, verts[7].y, BLACK);
+//  Tft.drawLine(verts[7].x, verts[7].y, verts[6].x, verts[6].y, BLACK);
+//  Tft.drawLine(verts[6].x, verts[6].y, verts[4].x, verts[4].y, BLACK);
+//  
+//  Tft.drawLine(verts[0].x, verts[0].y, verts[4].x, verts[4].y, BLACK);
+//  Tft.drawLine(verts[2].x, verts[2].y, verts[6].x, verts[6].y, BLACK);
+//  
+//  Tft.drawLine(verts[1].x, verts[1].y, verts[5].x, verts[5].y, BLACK);
+//  Tft.drawLine(verts[3].x, verts[3].y, verts[7].x, verts[7].y, BLACK);
+  
   memcpy(&bbold, &boundingbox, sizeof(line2d));
   bbinit = true;
-//  delay(10);
+  delay(33);
 }
 
 void drawPlasma()
